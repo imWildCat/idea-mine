@@ -29,7 +29,7 @@
     <ul class="navbar-nav navbar-right">
       <% if current_user %>
         <li class="nav-item">
-          <a class="nav-link" href="#">注销</a>
+          <%= link_to '注销', sessions_path, method: :delete, class: 'nav-link' %>
         </li>
       <% else %>
         <li class="nav-item">
@@ -45,7 +45,7 @@
 
   <% if request.original_fullpath == '/' %>
     <div>
-      <img style="width: 100%;" src="https://wx2.sinaimg.cn/mw690/0060lm7Tly1fqrjyu2imrj315q0rthdv.jpg" alt="poster">
+      <img style="width: 100%;" src="https://wx1.sinaimg.cn/mw690/0060lm7Tly1fqrk5xg5c3j315q0jpe82.jpg" alt="poster">
     </div>
   <% end %>
 
@@ -53,6 +53,10 @@
     <%= render partial: 'layouts/flash' %>
   </div>
   <%= yield %>
+
+  <footer style="text-align: center; font-size: 13px;">
+    Copyright WildCat 2018
+  </footer>
 </div>
 </body>
 </html>

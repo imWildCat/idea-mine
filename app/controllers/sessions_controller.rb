@@ -8,8 +8,9 @@ class SessionsController < ApplicationController
 
   def create
     u = User.find_by_email(params[:email])
-    if u and u.authenticate(params[:password])
-      session[:user_id] = user.id
+    if u&.authenticate(params[:password])
+      session[:user_id] = u.id
+      flash[:success] = '欢迎回来，' + u.username
       redirect_to root_path
     else
       redirect_to new_sessions_path(email: params[:email]), flash: {error: 'Email 或者密码错误'}
@@ -18,6 +19,6 @@ class SessionsController < ApplicationController
 
   def destroy
     logout
-    redirect_to root, flash: {info: '您已经注销'}
+    redirect_to root_path, flash: {info: '您已经注销'}
   end
 end
