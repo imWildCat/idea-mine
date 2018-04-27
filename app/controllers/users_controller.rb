@@ -1,6 +1,11 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
+  before_action :require_login, onloy: [:edit, :update, :destroy]
+  before_action :require_current_user, only: [:edit, :update, :destroy]
+
+  before_action :require_not_login, only: [:create, :new]
+
   # GET /users
   # GET /users.json
   def index
@@ -71,5 +76,17 @@ class UsersController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
     params.require(:user).permit(:username, :email, :password_digest, :last_ip)
+  end
+
+  def require_current_user
+    if current_user.id != @user.id
+      redirect_to user_path(current_user), flash: {info: '您只能修改自己的资料'}
+    end
+  end
+
+  def require_not_login
+    if current_user
+      redirect_to root_path, flash: {info: '您已登录，不能进行此操作'}
+    end
   end
 end
