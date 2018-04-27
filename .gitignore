@@ -26,3 +26,7 @@
 /config/master.key
 
 .idea/
+
+# Deployment
+config/deploy/production.rb
+config/deploy/staging.rb
