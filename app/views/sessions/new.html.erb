@@ -1,0 +1,7 @@
+<h1>登录</h1>
+<%= form_tag sessions_path, method: :post do %>
+
+  <%= text_field_tag :email, request.params[:email], placeholder: 'Email' %>
+  <%= password_field_tag :password, nil, placeholder: '密码' %>
+  <%= submit_tag '登录' %>
+<% end %>
