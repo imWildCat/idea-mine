@@ -9,6 +9,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
+    redirect_to root_path # do not allow to view all users
     @users = User.all
   end
 
