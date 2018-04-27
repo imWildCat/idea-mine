@@ -9,7 +9,8 @@ class ApplicationController < ActionController::Base
 
   def require_login
     unless current_user
-      redirect_to root_path, flash: {info: '您需要登录'}
+      cookies[:redirect_to] = request.referrer
+      redirect_to new_sessions_path, flash: {info: '您需要登录，才能进行下一步操作'}
     end
   end
 

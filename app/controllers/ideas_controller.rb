@@ -1,7 +1,9 @@
 class IdeasController < ApplicationController
   before_action :set_idea, only: [:show, :edit, :update, :destroy]
 
-  before_action :require_login, only: [:edit, :update, :destroy]
+  before_action :require_login, only: [:new, :create, :edit, :update, :destroy]
+
+  before_action :require_current_author, only: [:edit, :update, :destroy]
 
   # GET /ideas
   # GET /ideas.json
@@ -27,6 +29,7 @@ class IdeasController < ApplicationController
   # POST /ideas.json
   def create
     @idea = Idea.new(idea_params)
+    @idea.author_id = current_user.id
 
     respond_to do |format|
       if @idea.save
@@ -72,6 +75,12 @@ class IdeasController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def idea_params
-    params.require(:idea).permit(:author_id, :title, :content)
+    params.require(:idea).permit(:title, :content)
+  end
+
+  def require_current_author
+    unless @idea.author_id == current_user.id
+      redirect_to request.referrer, flash: {error: '您只能修改自己的想法'}
+    end
   end
 end
