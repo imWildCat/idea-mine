@@ -1,7 +1,7 @@
 class IdeasController < ApplicationController
   before_action :set_idea, only: [:show, :edit, :update, :destroy]
 
-  before_action :require_login, onloy: [:edit, :update, :destroy]
+  before_action :require_login, only: [:edit, :update, :destroy]
 
   # GET /ideas
   # GET /ideas.json
